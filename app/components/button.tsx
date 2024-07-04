@@ -21,7 +21,6 @@ export default function Button({
         inputKey === "0" ? "col-span-2" : "",
         "p-1 rounded-full"
       )}
-      key={inputKey}
     >
       {inputKey}
     </button>

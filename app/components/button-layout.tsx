@@ -106,12 +106,13 @@ export default function ButtonLayout({
 
   return (
     <div className="grid grid-rows-5 grid-cols-4 gap-2">
-      {buttonKeys.map((row: string[]) =>
+      {buttonKeys.flatMap((row: string[]) =>
         row.map((key: string) => (
           <Button
             variant={operators.includes(key) ? "operator" : undefined}
             inputKey={key}
             handleButtonPress={handleButtonPress}
+            key={key}
           />
         ))
       )}
