@@ -1,4 +1,8 @@
 import type { MetaFunction } from "@remix-run/node";
+import { useState } from "react";
+import ButtonLayout from "~/components/button-layout";
+import ErrorBanner from "~/components/error-banner";
+import InputScreen from "~/components/input-screen";
 
 export const meta: MetaFunction = () => {
   return [
@@ -7,42 +11,34 @@ export const meta: MetaFunction = () => {
   ];
 };
 
+export type Operator = "+" | "-" | "x" | "/" | "%" | "+/-" | undefined;
+
 export default function Index() {
+  const [inputNumber, setInputNumber] = useState<number | undefined>(undefined);
+  const [operation, setOperation] = useState<Operator>(undefined);
+  const [result, setResult] = useState<number | undefined>(undefined);
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(
+    undefined
+  );
+
   return (
-    <div className="font-sans p-4">
-      <h1 className="text-3xl">Welcome to Remix</h1>
-      <ul className="list-disc mt-4 pl-6 space-y-2">
-        <li>
-          <a
-            className="text-blue-700 underline visited:text-purple-900"
-            target="_blank"
-            href="https://remix.run/start/quickstart"
-            rel="noreferrer"
-          >
-            5m Quick Start
-          </a>
-        </li>
-        <li>
-          <a
-            className="text-blue-700 underline visited:text-purple-900"
-            target="_blank"
-            href="https://remix.run/start/tutorial"
-            rel="noreferrer"
-          >
-            30m Tutorial
-          </a>
-        </li>
-        <li>
-          <a
-            className="text-blue-700 underline visited:text-purple-900"
-            target="_blank"
-            href="https://remix.run/docs"
-            rel="noreferrer"
-          >
-            Remix Docs
-          </a>
-        </li>
-      </ul>
+    <div className="flex flex-col space-y-4 h-screen justify-center items-center">
+      <div className="space-y-6 w-72 border-[2px] rounded-lg border-zinc-400 p-6">
+        <InputScreen inputNumber={inputNumber} result={result} />
+        <ButtonLayout
+          operation={operation}
+          setOperation={setOperation}
+          setInputNumber={setInputNumber}
+          inputNumber={inputNumber}
+          result={result}
+          setResult={setResult}
+          setErrorMessage={setErrorMessage}
+        />
+      </div>
+      <ErrorBanner
+        errorMessage={errorMessage}
+        setErrorMessage={setErrorMessage}
+      />
     </div>
   );
 }
